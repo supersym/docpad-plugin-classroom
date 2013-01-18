@@ -1,0 +1,37 @@
+<!DOCTYPE html><html><head><title>a.js</title><meta http-equiv="Content-Type" content="text/html" charset="UTF-8"><link rel="stylesheet" media="all" href="../docco.css"></head><body><div id="container"><div id="background"></div><div id="jump_to">Jump To &hellip;<div id="jump_wrapper"><div id="jump_page"><a href="../index.html" class="source"><span class="file_name">README</span></a><a href="../test/a.js.html" class="source selected"><span class="base_path">test / </span><span class="file_name">a.js</span></a></div></div></div><table cellpadding="0" cellspacing="0"><thead><tr><th class="docs"><h1>a.js</h1><div class="filepath">test/</div></th><th class="code"></th></tr></thead><tbody><tr id="section-1"><td class="docs"><div class="pilwrap"><a href="#section-1" class="pilcrow">&#182;</a></div><div class="dox"><div class="summary"><p>synchronous Callbacks</p></div><div class="body"></div></div>
+</td><td class="code"><div class="highlight"><pre></pre></div></td></tr><tr id="section-2"><td class="docs"><div class="pilwrap"><a href="#section-2" class="pilcrow">&#182;</a></div><p>Sometimes functions can take a long time to return. For example if you call a
+function read(file), the function might have to stop and wait for the disk to
+spin-up and seek to the right location before the information is ready. If the
+file is actually a socket connection to another server in the cloud, the
+function will have to wait until the other server responds.</p>
+</td><td class="code"><div class="highlight"><pre></pre></div></td></tr><tr id="section-3"><td class="docs"><div class="pilwrap"><a href="#section-3" class="pilcrow">&#182;</a></div><p>This can be a problem. For example, in the browser you don't want the user
+interface to freeze while you fetch map results from Google Maps. On the
+server, you don't want one request that accesses a rarely used part of the
+database to hold up all other requests.</p>
+</td><td class="code"><div class="highlight"><pre></pre></div></td></tr><tr id="section-4"><td class="docs"><div class="pilwrap"><a href="#section-4" class="pilcrow">&#182;</a></div><p>Luckily there is a solution. In the asynchronous model the readAsync function
+accepts both a file and a callback parameter. The function returns immediately
+before the file is read and schedules the read to happen sometime in the
+future. Once the data is ready, the callback function is called on the data.</p>
+</td><td class="code"><div class="highlight"><pre></pre></div></td></tr><tr id="section-5"><td class="docs"><div class="pilwrap"><a href="#section-5" class="pilcrow">&#182;</a></div><p>And what's a callback? It's a closure! We'll look at how to use asynchronous
+functions; implementing them is a whole other story.</p>
+</td><td class="code"><div class="highlight"><pre></pre></div></td></tr><tr id="section-6"><td class="docs"><div class="pilwrap"><a href="#section-6" class="pilcrow">&#182;</a></div><p>Here's an example of how you would use a regular blocking read function to get
+the contents of a file.</p>
+</td><td class="code"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">readFile</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">data</span><span class="p">;</span>
+    <span class="nx">data</span> <span class="o">=</span> <span class="nx">read</span><span class="p">(</span><span class="s1">&#39;file.txt&#39;</span><span class="p">);</span>
+    <span class="nx">doSomething</span><span class="p">(</span><span class="s1">&#39;Contents: &#39;</span> <span class="o">+</span> <span class="nx">data</span><span class="p">);</span>
+<span class="p">};</span>
+
+<span class="nx">Here</span><span class="s1">&#39;s the same example using an asynchronous readAsync function.</span>
+
+<span class="s1">var readFileAsync = function () {</span>
+<span class="s1">    var func = function (x) {</span>
+
+<span class="s1">//DIVIDER</span>
+<span class="s1">        doSomething(&#39;</span><span class="nx">Contents</span><span class="o">:</span> <span class="s1">&#39; + x);</span>
+<span class="s1">    };</span>
+<span class="s1">    readAsync(&#39;</span><span class="nx">file</span><span class="p">.</span><span class="nx">txt</span><span class="err">&#39;</span><span class="p">,</span> <span class="nx">func</span><span class="p">);</span></pre></div></td></tr><tr id="section-7"><td class="docs"><div class="pilwrap"><a href="#section-7" class="pilcrow">&#182;</a></div><div class="dox"><div class="summary"><p>You can do things here with the<br />           file contents x.</p></div><div class="body"></div></div>
+</td><td class="code"><div class="highlight"><pre>    <span class="nx">doMoreStuff</span><span class="p">();</span>
+<span class="p">};</span></pre></div></td></tr><tr id="section-8"><td class="docs"><div class="pilwrap"><a href="#section-8" class="pilcrow">&#182;</a></div><div class="dox"><div class="summary"><p>You can do things here but you don't<br />       have access to the file contents. func<br />       may or may not have been called at this<br />       point.</p></div><div class="body"></div></div>
+</td><td class="code"><div class="highlight"><pre></pre></div></td></tr><tr id="section-9"><td class="docs"><div class="pilwrap"><a href="#section-9" class="pilcrow">&#182;</a></div><p>Someone calls readFileAsync. Inside readFileAsync, readAsync is called with callback func. Once the data is ready, readAsync calls func with the data. Then func calls doSomething with the updated string containing the data. This might happen before, during, or after the execution of doMoreStuff().</p>
+</td><td class="code"><div class="highlight"><pre>undefined</pre></div></td></tr></tbody></table><div id="generated">generated Fri Jan 04 2013 21:38:02 GMT+0100 (CET)  </div><div id="projectname"><a href="../index.html">DocPad Plugin for Learning and Coding</a></div></div></body></html>

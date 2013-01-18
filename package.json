@@ -1,0 +1,8 @@
+{
+  "name": "docpad-plugin-classroom",
+  "version": "1.0.0",
+  "dependencies": {
+    "docco-husky": "latest"
+  }
+
+}
